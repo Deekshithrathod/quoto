@@ -4,14 +4,13 @@ import { handleClickServer } from "@repo/ui/src/action";
 import type { Metadata } from "next";
 import { Montserrat, Raleway } from "next/font/google";
 import Footer from "@repo/ui/src/Footer";
-import QuoteSkeleton from "@repo/ui/src/skeletons/QuoteSkeleton";
 
 const raleway = Raleway({
 	subsets: ["latin"],
 	weight: ["500", "700"],
 });
 
-export const montserrat = Montserrat({
+const montserrat = Montserrat({
 	subsets: ["latin"],
 	weight: ["500", "700"],
 });
