@@ -2,6 +2,11 @@ import AuthorBtn from "@repo/ui/src/AuthorBtn";
 import Quote from "@repo/ui/src/Quote";
 import { fetchRandomQuote } from "./lib/data";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Quoto | Random Quote",
+};
 
 const Page = async () => {
 	const { text, author, genre } = await fetchRandomQuote();

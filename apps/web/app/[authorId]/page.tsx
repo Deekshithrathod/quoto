@@ -1,7 +1,17 @@
 import Quote from "@repo/ui/src/Quote";
 import { QuoteProp, fetchAuthorQuotes } from "../lib/data";
 import LoadMore from "@repo/ui/src/LoadMore";
+import { Metadata } from "next";
 
+export async function generateMetadata({
+	params,
+}: {
+	params: { authorId: string };
+}): Promise<Metadata> {
+	return {
+		title: params.authorId.split("%20").join(" "),
+	};
+}
 const page = async ({ params }: { params: { authorId: string } }) => {
 	const authorId = params.authorId.split("%20").join(" ") || "Bill Gates";
 	const quotes = await fetchAuthorQuotes(authorId, 0);

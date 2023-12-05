@@ -1,5 +1,5 @@
 import "@repo/ui/styles.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat, Raleway } from "next/font/google";
 import Footer from "@repo/ui/src/Footer";
 import Header from "../components/Header";
@@ -14,9 +14,82 @@ const montserrat = Montserrat({
 	weight: ["500", "700"],
 });
 
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+	themeColor: "#FFFFFF",
+};
+
 export const metadata: Metadata = {
-	title: "Quoto | Today's Quote",
-	description: "Daily Nuggets of Insight",
+	// TODO: Fix the deployed URL
+	metadataBase: new URL("https://acme.com"),
+	applicationName: "Quoto",
+	authors: [{ name: "Deekshith Rathod" }],
+	generator: "Next.js",
+	keywords: [
+		"Quoto",
+		"Quotes",
+		"Daily",
+		"Nuggets",
+		"Insight",
+		"Fullstack",
+		"Next.js",
+		"React",
+		"Tailwind",
+		"Typescript",
+		"Developer",
+		"Turbo repo",
+	],
+
+	creator: "Deekshith Rathod",
+	icons: {
+		shortcut: "/favicon.ico",
+		apple: "/icons/apple-touch-icon.png",
+	},
+	title: {
+		template: "Quoto | %s",
+		default: "Quoto",
+	},
+	description: "Daily nuggets of insight",
+	manifest: "/manifest.json",
+	openGraph: {
+		title: "Quoto | Today's Quote",
+		description: "Daily nuggets of insight",
+		siteName: "Quoto",
+		locale: "en",
+		images: [
+			{
+				url: "/og.png",
+			},
+		],
+		// TODO: Fix the url
+		url: "https://quoto.vercel.app",
+		type: "website",
+	},
+
+	// OG: Twitter
+	twitter: {
+		site: "Quoto",
+		title: "Quoto | Today's Quote",
+		description: "Daily nuggets of insight",
+		creator: "@DeekshithRathod",
+		card: "summary_large_image",
+		images: [
+			{
+				url: "/og.png",
+				width: 192,
+				height: 192,
+			},
+		],
+	},
+
+	// Apple config
+	appleWebApp: {
+		capable: true,
+		title: "Quoto | Today's Quote",
+		startupImage: "/icons/android-chrome-192x192.png",
+		statusBarStyle: "black-translucent",
+	},
 };
 
 export default function RootLayout({
