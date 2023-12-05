@@ -72,6 +72,13 @@ export const metadata: Metadata = {
 		description: "Daily nuggets of insight",
 		creator: "@DeekshithRathod",
 		card: "summary_large_image",
+		images: [
+			{
+				url: "/twitter-image.png",
+				width: 1600,
+				height: 900,
+			},
+		],
 	},
 
 	// Apple config
