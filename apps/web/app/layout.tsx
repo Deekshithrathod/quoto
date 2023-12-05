@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-	metadataBase: new URL("https://quoto-web.vercel.app/"),
+	metadataBase: new URL("https://quoto.brotherOf.dhruvarathod.com"),
 	applicationName: "Quoto",
 	authors: [{ name: "Deekshith Rathod" }],
 	generator: "Next.js",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 				url: "/opengraph-image.png",
 			},
 		],
-		url: "https://quoto-web.vercel.app/",
+		url: "https://quoto.brotherOf.dhruvarathod.com",
 		type: "website",
 	},
 
