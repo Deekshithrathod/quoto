@@ -21,8 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-	// TODO: Fix the deployed URL
-	metadataBase: new URL("https://acme.com"),
+	metadataBase: new URL("https://quoto-web.vercel.app/"),
 	applicationName: "Quoto",
 	authors: [{ name: "Deekshith Rathod" }],
 	generator: "Next.js",
@@ -62,8 +61,7 @@ export const metadata: Metadata = {
 				url: "/og.png",
 			},
 		],
-		// TODO: Fix the url
-		url: "https://quoto.vercel.app",
+		url: "https://quoto-web.vercel.app/",
 		type: "website",
 	},
 
