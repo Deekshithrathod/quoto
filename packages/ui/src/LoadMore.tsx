@@ -2,19 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { fetchAuthorQuotes } from "../../../apps/web/app/lib/data";
+import { QuoteProp, fetchAuthorQuotes } from "../../../apps/web/app/lib/data";
 import Quote from "./Quote";
+import QuoteSkeleton from "./skeletons/QuoteSkeleton";
+
+let total = 10;
+let offset = 20;
 
 const LoadMore = ({ author }: { author: string }) => {
 	const { ref, inView } = useInView();
-	const [offset, setOffset] = useState(20);
-	const [total, setTotal] = useState(10);
-	const [quotes, setQuotes] = useState<{ text: string }[]>([]);
+	const [quotes, setQuotes] = useState<QuoteProp[]>([]);
 	const [nomore, setNomore] = useState(false);
 
 	useEffect(() => {
 		if (inView && !nomore) {
-			fetchAuthorQuotes(author, 20, offset).then((res) => {
+			console.log("fetching");
+
+			fetchAuthorQuotes(author, offset).then((res) => {
 				console.log(res);
 				console.log(res.data);
 
@@ -22,14 +26,8 @@ const LoadMore = ({ author }: { author: string }) => {
 					setNomore(true);
 					return;
 				}
-				const tot = res.pagination.total;
-				setTotal(tot);
 
-				if (offset + 20 >= total) {
-					return;
-				}
-
-				setOffset(offset + 20);
+				offset += 20;
 				setQuotes([...quotes, ...res.data.quotes]);
 			});
 		}
@@ -38,15 +36,21 @@ const LoadMore = ({ author }: { author: string }) => {
 	return (
 		<>
 			<section className="flex flex-col gap-12 mt-8 lg:gap-20 lg:mt-20 mb-20">
-				{quotes.map((quote: { text: string }) => (
-					<Quote text={quote.text} />
+				{quotes.map((quote: QuoteProp, index: number) => (
+					<Quote
+						key={quote.id || index + "" + new Date().toTimeString()}
+						text={quote.text}
+					/>
 				))}
 			</section>
 			<div
 				ref={ref}
-				className={`text-3xl bg-red-200 h-10 ${nomore && "animate-pulse"}`}>
-				{nomore ? "No more quotes" : "LoadMore"}
+				className={`text-xl bg-[#F7DF94] bg-opacity-40 rounded-md p-4 w-fit mb-20 ${
+					!nomore && "animate-pulse"
+				}`}>
+				{nomore ? "No more quotes to show" : "Loading more quotes..."}
 			</div>
+			{!nomore && <QuoteSkeleton />}
 		</>
 	);
 };

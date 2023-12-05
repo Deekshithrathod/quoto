@@ -1,14 +1,10 @@
 "use server";
 import { unstable_noStore as noStore } from "next/cache";
-type Quote = {
+export type QuoteProp = {
+	id?: string;
 	text: string;
 	author: string;
 	genre: string;
-};
-
-type NotFoundResponse = {
-	message: string;
-	stack?: undefined;
 };
 
 export const fetchRandomQuote = async () => {
@@ -16,18 +12,14 @@ export const fetchRandomQuote = async () => {
 	const response = await fetch(
 		"https://api-quoto.onrender.com/v1/quote/random"
 	);
-	const quote: Quote = await response.json();
+	const quote: QuoteProp = await response.json();
 	return quote;
 };
 
-export const fetchAuthorQuotes = async (
-	author: string,
-	limit: number,
-	offset: number
-) => {
+export const fetchAuthorQuotes = async (author: string, offset: number) => {
 	noStore();
 	const response = await fetch(
-		`https://api-quoto.onrender.com/v1/quote/${author}?limit=${limit}&offset=${offset}`
+		`https://api-quoto.onrender.com/v1/quote/${author}?limit=20&offset=${offset}`
 	);
 
 	const quotes: {
@@ -37,7 +29,7 @@ export const fetchAuthorQuotes = async (
 			offset: number;
 		};
 		data: {
-			quotes: Quote[];
+			quotes: QuoteProp[];
 		};
 	} = await response.json();
 	return quotes;

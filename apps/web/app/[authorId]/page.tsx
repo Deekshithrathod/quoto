@@ -1,10 +1,10 @@
 import Quote from "@repo/ui/src/Quote";
-import { fetchAuthorQuotes } from "../lib/data";
+import { QuoteProp, fetchAuthorQuotes } from "../lib/data";
 import LoadMore from "@repo/ui/src/LoadMore";
 
 const page = async ({ params }: { params: { authorId: string } }) => {
 	const authorId = params.authorId.split("%20").join(" ") || "Bill Gates";
-	const quotes = await fetchAuthorQuotes(authorId, 10, 0);
+	const quotes = await fetchAuthorQuotes(authorId, 0);
 
 	return (
 		<>
@@ -12,9 +12,9 @@ const page = async ({ params }: { params: { authorId: string } }) => {
 				{authorId}
 			</h1>
 			<section className="flex flex-col gap-12 mt-8 lg:gap-20 lg:mt-20 mb-20">
-				{quotes.data.quotes.map((quote: { text: string }, index: number) => (
+				{quotes.data.quotes.map((quote: QuoteProp, index: number) => (
 					<Quote
-						key={`${quote.text}+${index}+${quote.text}`}
+						key={quote.id || index + "" + new Date().toTimeString()}
 						text={quote.text}
 					/>
 				))}
