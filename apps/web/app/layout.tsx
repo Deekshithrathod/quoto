@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 		locale: "en",
 		images: [
 			{
-				url: "/og.png",
+				url: "/opengraph-image.png",
 			},
 		],
 		url: "https://quoto-web.vercel.app/",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		images: [
 			{
-				url: "/og.png",
+				url: "/opengraph-image.png",
 				width: 192,
 				height: 192,
 			},
