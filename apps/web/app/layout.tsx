@@ -72,7 +72,6 @@ export const metadata: Metadata = {
 		description: "Daily nuggets of insight",
 		creator: "@DeekshithRathod",
 		card: "summary_large_image",
-		images: "https://quoto.brotherOf.dhruvarathod.com/opengraph-image.png",
 	},
 
 	// Apple config
