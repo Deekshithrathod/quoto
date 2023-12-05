@@ -5,5 +5,6 @@ export * from "./RandomBtn";
 export * from "./AuthorBtn";
 export * from "./Quote";
 export * from "./LoadMore";
+export * from "./MoveToTop";
 
 export * from "./skeletons";

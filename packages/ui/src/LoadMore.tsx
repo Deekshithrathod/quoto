@@ -5,8 +5,8 @@ import { useInView } from "react-intersection-observer";
 import { QuoteProp, fetchAuthorQuotes } from "../../../apps/web/app/lib/data";
 import Quote from "./Quote";
 import QuoteSkeleton from "./skeletons/QuoteSkeleton";
+import MoveToTop from "./MoveToTop";
 
-let total = 10;
 let offset = 20;
 
 const LoadMore = ({ author }: { author: string }) => {
@@ -43,14 +43,16 @@ const LoadMore = ({ author }: { author: string }) => {
 					/>
 				))}
 			</section>
-			<div
-				ref={ref}
-				className={`text-xl bg-[#F7DF94] bg-opacity-40 rounded-md p-4 w-fit mb-20 ${
-					!nomore && "animate-pulse"
-				}`}>
-				{nomore ? "No more quotes to show" : "Loading more quotes..."}
-			</div>
-			{!nomore && <QuoteSkeleton />}
+			{!nomore && (
+				<div
+					ref={ref}
+					className={`text-xl bg-[#F7DF94] bg-opacity-40 rounded-md p-4 w-fit mb-20 ${
+						!nomore && "animate-pulse"
+					}`}>
+					Loading more quotes...
+				</div>
+			)}
+			{nomore ? <MoveToTop /> : <QuoteSkeleton />}
 		</>
 	);
 };
