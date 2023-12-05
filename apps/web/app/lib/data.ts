@@ -6,6 +6,11 @@ type Quote = {
 	genre: string;
 };
 
+type NotFoundResponse = {
+	message: string;
+	stack?: undefined;
+};
+
 export const fetchRandomQuote = async () => {
 	noStore();
 	const response = await fetch(

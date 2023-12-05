@@ -14,15 +14,15 @@ const LoadMore = ({ author }: { author: string }) => {
 
 	useEffect(() => {
 		if (inView && !nomore) {
-			fetchAuthorQuotes(author, 20, offset).then((data) => {
-				console.log(data);
-				console.log(data.data);
+			fetchAuthorQuotes(author, 20, offset).then((res) => {
+				console.log(res);
+				console.log(res.data);
 
-				if (data.message) {
+				if (!res.pagination) {
 					setNomore(true);
 					return;
 				}
-				const tot = data.pagination.total;
+				const tot = res.pagination.total;
 				setTotal(tot);
 
 				if (offset + 20 >= total) {
@@ -30,7 +30,7 @@ const LoadMore = ({ author }: { author: string }) => {
 				}
 
 				setOffset(offset + 20);
-				setQuotes([...quotes, ...data.data.quotes]);
+				setQuotes([...quotes, ...res.data.quotes]);
 			});
 		}
 	}, [inView]);
