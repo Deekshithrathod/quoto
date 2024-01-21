@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 	creator: "Deekshith Rathod",
 	icons: {
-		shortcut: "/favicon.ico",
+		shortcut: "favicon.ico",
 		apple: "/icons/apple-touch-icon.png",
 	},
 	title: {
