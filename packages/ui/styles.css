@@ -3,30 +3,50 @@
 @tailwind utilities;
 
 @layer base {
-	html {
-		scroll-behavior: smooth;
-		text-rendering: optimizeLegibility;
-	}
+  html {
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
 
-	::selection {
-		background: rgba(247, 223, 148, 0.7);
-		color: #111111;
-	}
+  ::selection {
+    background: rgba(247, 223, 148, 0.7);
+    color: #111111;
+  }
 }
 
 @layer utilities {
-	.text-balance {
-		text-wrap: balance;
-	}
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 .quote-item {
-	content-visibility: auto;
-	contain-intrinsic-size: 0 180px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 180px;
+}
+
+.quote-disclosure[open] .quote-details {
+  animation: quote-details-in 180ms ease-out both;
+}
+
+@keyframes quote-details-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	html {
-		scroll-behavior: auto;
-	}
+  html {
+    scroll-behavior: auto;
+  }
+
+  .quote-disclosure[open] .quote-details {
+    animation: none;
+  }
 }
