@@ -7,31 +7,27 @@ import Quote from "./Quote";
 import QuoteSkeleton from "./skeletons/QuoteSkeleton";
 import MoveToTop from "./MoveToTop";
 
-let offset = 20;
-
 const LoadMore = ({ author }: { author: string }) => {
 	const { ref, inView } = useInView();
 	const [quotes, setQuotes] = useState<QuoteProp[]>([]);
 	const [nomore, setNomore] = useState(false);
+	const [offset, setOffset] = useState(20);
 
 	useEffect(() => {
 		if (inView && !nomore) {
-			console.log("fetching");
-
-			fetchAuthorQuotes(author, offset).then((res) => {
-				console.log(res);
-				console.log(res.data);
-
-				if (!res.pagination) {
-					setNomore(true);
-					return;
-				}
-
-				offset += 20;
-				setQuotes([...quotes, ...res.data.quotes]);
-			});
+			fetchAuthorQuotes(author, offset)
+				.then((res) => {
+					const incoming = res.data.quotes;
+					if (!incoming || incoming.length === 0) {
+						setNomore(true);
+						return;
+					}
+					setOffset((prev) => prev + 20);
+					setQuotes((prev) => [...prev, ...incoming]);
+				})
+				.catch(() => setNomore(true));
 		}
-	}, [inView]);
+	}, [inView, nomore, offset, author]);
 
 	return (
 		<>
