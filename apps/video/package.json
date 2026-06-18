@@ -1,0 +1,21 @@
+{
+  "name": "video",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch-data": "node scripts/fetch-bill-cosby.cjs",
+    "prerender": "npm run fetch-data",
+    "prestudio": "npm run fetch-data",
+    "render": "remotion render src/index.ts QuotoBillCosby out/quoto-bill-cosby.mp4 --muted",
+    "studio": "remotion studio src/index.ts"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.0"
+  }
+}
