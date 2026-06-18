@@ -1,6 +1,3 @@
-"use server";
-import { unstable_noStore as noStore } from "next/cache";
-
 export type QuoteProp = {
 	id?: string;
 	text: string;
@@ -8,7 +5,7 @@ export type QuoteProp = {
 	genre: string;
 };
 
-const FALLBACK_QUOTES: QuoteProp[] = [
+const FALLBACK_QUOTES: [QuoteProp, ...QuoteProp[]] = [
 	{
 		id: "f1",
 		text: "The only way to do great work is to love what you do.",
@@ -172,28 +169,58 @@ type AuthorQuotesResponse = {
 	};
 };
 
+const API_BASE_URL = "https://api-quoto.onrender.com/v1/quote";
+const PAGE_SIZE = 20;
+const RANDOM_TIMEOUT_MS = 120;
+const AUTHOR_TIMEOUT_MS = 650;
+
+const getRandomFallbackQuote = (): QuoteProp =>
+	FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)] ??
+	FALLBACK_QUOTES[0]!;
+
+const fetchWithTimeout = async (
+	input: string,
+	init?: RequestInit & { next?: { revalidate?: number } },
+	timeoutMs = AUTHOR_TIMEOUT_MS
+) => {
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+	try {
+		return await fetch(input, {
+			...init,
+			signal: controller.signal,
+		});
+	} finally {
+		clearTimeout(timeout);
+	}
+};
+
 const getFallbackForAuthor = (author: string, offset: number): AuthorQuotesResponse => {
 	const authorQuotes = FALLBACK_QUOTES.filter(
 		(q) => q.author.toLowerCase() === author.toLowerCase()
 	);
 	const pool = authorQuotes.length > 0 ? authorQuotes : FALLBACK_QUOTES;
-	const page = pool.slice(offset, offset + 20);
+	const page = pool.slice(offset, offset + PAGE_SIZE);
 	return {
-		pagination: { total: pool.length, limit: 20, offset },
+		pagination: { total: pool.length, limit: PAGE_SIZE, offset },
 		data: { quotes: page },
 	};
 };
 
 export const fetchRandomQuote = async (): Promise<QuoteProp> => {
-	noStore();
 	try {
-		const response = await fetch(
-			"https://api-quoto.onrender.com/v1/quote/random"
+		const response = await fetchWithTimeout(
+			`${API_BASE_URL}/random`,
+			{
+				cache: "no-store",
+			},
+			RANDOM_TIMEOUT_MS
 		);
 		if (!response.ok) throw new Error(`API responded with ${response.status}`);
 		return await response.json();
 	} catch {
-		return FALLBACK_QUOTES[Math.floor(Math.random() * FALLBACK_QUOTES.length)];
+		return getRandomFallbackQuote();
 	}
 };
 
@@ -201,10 +228,13 @@ export const fetchAuthorQuotes = async (
 	author: string,
 	offset: number
 ): Promise<AuthorQuotesResponse> => {
-	noStore();
 	try {
-		const response = await fetch(
-			`https://api-quoto.onrender.com/v1/quote/${author}?limit=20&offset=${offset}`
+		const response = await fetchWithTimeout(
+			`${API_BASE_URL}/${encodeURIComponent(author)}?limit=${PAGE_SIZE}&offset=${offset}`,
+			{
+				next: { revalidate: 300 },
+			},
+			AUTHOR_TIMEOUT_MS
 		);
 		if (!response.ok) throw new Error(`API responded with ${response.status}`);
 		return await response.json();

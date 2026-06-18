@@ -1,4 +1,2 @@
-import React from "react";
-
-export * from "./QuoteSkeleton";
-export * from "./AuthorBtnSkeleton";
+export { default as QuoteSkeleton } from "./QuoteSkeleton";
+export { default as AuthorBtnSkeleton } from "./AuthorBtnSkeleton";

@@ -1,26 +1,16 @@
-const withPWA = require("next-pwa");
-module.exports = withPWA({
-	pwa: {
-		dest: "public",
-		disable: process.env.NODE_ENV === "development",
-		register: true,
-		scope: "/app",
-		sw: "service-worker.js",
-		// cacheOnFrontEndNav: true,
-		// aggressiveFrontEndNavCaching: true,
-		// reloadOnOnline: true,
-		// swcMinify: true,
-		workboxOptions: {
-			disableDevLogs: true,
-			// runtimecaching: [],
-		},
-		// ... other options you like
-	},
+const withPWA = require("next-pwa")({
+  dest: "public",
+  disable: process.env.NODE_ENV === "development",
+	register: true,
+	scope: "/",
+	sw: "service-worker.js",
+	disableDevLogs: true,
 });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	transpilePackages: ["@repo/ui"],
+  output: "standalone",
+  transpilePackages: ["@repo/ui"],
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

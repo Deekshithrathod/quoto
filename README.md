@@ -28,3 +28,12 @@ To develop all apps and packages, run the following command:
 cd quoto
 npm dev
 ```
+
+### Docker
+
+To build and run the web app in Docker:
+
+```
+docker build -t quoto-web .
+docker run --rm -p 3000:3000 quoto-web
+```

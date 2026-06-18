@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://quoto.brotherof.dhruvarathod.com/sitemap.xml
