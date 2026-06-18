@@ -1,9 +1,4 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-
-vi.mock("next/cache", () => ({
-  unstable_noStore: vi.fn(),
-}));
-
 import { fetchAuthorQuotes, fetchRandomQuote } from "./data";
 
 describe("quote data fallbacks", () => {
