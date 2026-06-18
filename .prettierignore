@@ -1,0 +1,22 @@
+# Dependencies & lockfiles
+node_modules/
+package-lock.json
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+coverage/
+
+# Test & tooling artifacts
+playwright-report/
+test-results/
+.turbo/
+
+# Generated files
+next-env.d.ts
+**/public/service-worker.js
+**/public/workbox-*.js
+**/public/sw.js
+**/public/fallback-*.js

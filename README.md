@@ -17,7 +17,7 @@ To build all apps and packages, run the following command:
 
 ```
 cd quoto
-npm build
+npm run build
 ```
 
 ### Develop
@@ -26,8 +26,22 @@ To develop all apps and packages, run the following command:
 
 ```
 cd quoto
-npm dev
+npm run dev
 ```
+
+### Test
+
+To lint, typecheck, and run the unit and end-to-end tests:
+
+```
+cd quoto
+npm run lint
+npm run typecheck
+npm test
+npm run test:e2e
+```
+
+These same checks run in CI on every pull request (see `.github/workflows/ci.yml`).
 
 ### Docker
 
